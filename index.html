@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Wedding Invitation | Anjali & Mohit</title>
+  <meta name="description" content="With the blessings of the Almighty, the Parihar family invites you to the wedding of Anjali & Mohit — 25 January 2027, Sisodiya Garden, Jodhpur." />
+  <meta name="theme-color" content="#5E7458" />
+
+  <!-- Link preview (WhatsApp / social) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Anjali & Mohit — Wedding Invitation" />
+  <meta property="og:description" content="Sangeet 24 Jan · Wedding 25 Jan 2027 · Sisodiya Garden, Jodhpur" />
+  <!-- Link preview needs the full public URL -->
+  <meta property="og:url" content="https://boutiqueos.github.io/Invitation/" />
+  <meta property="og:image" content="https://boutiqueos.github.io/Invitation/assets/preview.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@500;600&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #FAF6F0;
+      --stage-bg: #F6EFE3;
+      --gold: #C59B27;
+      --gold-dark: #A27B13;
+      --maroon: #5A1520;
+      --maroon-deep: #4A0A10;
+      --text-dark: #2A1F1D;
+      --sage-dark: #5E7458;
+      --sage-light: #7C9174;
+      --shadow-soft: rgba(74, 10, 16, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #16130F;
+      color: var(--text-dark);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    /* App frame: card on desktop, full-screen on phones */
+    .app {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      height: calc(100vh - 24px);
+      height: calc(100dvh - 24px);
+      max-height: 900px;
+      background: var(--bg-cream);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0; }
+      .app { max-width: none; height: 100vh; height: 100dvh; max-height: none; border-radius: 0; box-shadow: none; }
+    }
+
+    #petals {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    /* ============ STEP 1: SLIDING LINEN DOORS ============ */
+    .intro {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      cursor: pointer;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .intro.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .door {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background-color: var(--door);
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 4px),
+        linear-gradient(90deg, rgba(0,0,0,0.16), transparent 35%, transparent 70%, rgba(0,0,0,0.10));
+      transition: transform 1.6s cubic-bezier(0.7, 0, 0.3, 1);
+    }
+
+    .door::after {
+      /* thin gold piping */
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(197, 155, 39, 0.35);
+      border-radius: 4px;
+    }
+
+    .door-l { left: 0; --door: var(--sage-dark); box-shadow: inset -6px 0 14px rgba(0,0,0,0.25); }
+    .door-r { right: 0; --door: var(--sage-light); box-shadow: -8px 0 18px rgba(0,0,0,0.25); z-index: 1; }
+
+    .intro.open .door-l { transform: translateX(-101%); }
+    .intro.open .door-r { transform: translateX(calc(100% + 90px)); }
+
+    .seal {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 124px;
+      height: 166px;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,0.35));
+      animation: sealFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes sealFloat {
+      0%, 100% { transform: translate(-50%, -50%); }
+      50% { transform: translate(-50%, calc(-50% - 4px)); }
+    }
+
+    .tap-hint {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 13%;
+      z-index: 2;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #FFF7E6;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      animation: pulse 1.8s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .intro.open .tap-hint { opacity: 0; animation: none; }
+
+    @keyframes pulse { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+
+    /* ============ SCROLLING PAGE ============ */
+    .scroller {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .scroller.locked { overflow: hidden; }
+
+    /* ============ STEP 2: CURTAIN STAGE ============ */
+    .stage {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 40%, #FFFBF4 0%, var(--stage-bg) 55%, #EFE3D0 100%);
+      --venue-h: 38%;
+    }
+
+    .hero {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 64px;
+      bottom: var(--venue-h);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 22%;
+    }
+
+    .hero > * {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .hero.show > * { opacity: 1; transform: none; }
+    .hero.show > :nth-child(2) { transition-delay: 0.25s; }
+    .hero.show > :nth-child(3) { transition-delay: 0.5s; }
+    .hero.show > :nth-child(4) { transition-delay: 0.6s; }
+    .hero.show > :nth-child(5) { transition-delay: 0.7s; }
+    .hero.show > :nth-child(6) { transition-delay: 1.0s; }
+    .hero.show > :nth-child(7) { transition-delay: 1.2s; }
+    .hero.show > :nth-child(8) { transition-delay: 1.8s; }
+
+    .shri {
+      font-family: 'Tiro Devanagari Sanskrit', serif;
+      font-size: 14px;
+      color: var(--gold-dark);
+      white-space: nowrap;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      font-size: 10px;
+      margin: 10px 0;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .divider::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    .hero-name {
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--maroon);
+      letter-spacing: 1px;
+    }
+
+    .hero-amp {
+      font-size: 28px;
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1.2;
+    }
+
+    .hero-date {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold-dark);
+      white-space: nowrap;
+    }
+
+    .hero-place {
+      font-style: italic;
+      font-size: 14px;
+      color: #6B5A4E;
+      margin-top: 4px;
+    }
+
+    .scroll-hint {
+      margin-top: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--maroon);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .scroll-hint svg { animation: bob 1.6s ease-in-out infinite; }
+
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+    .curtains {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .venue {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      max-height: 40%;
+      z-index: 3;
+      pointer-events: none;
+      display: block;
+    }
+
+    /* ============ STEP 3: INVITATION CONTENT ============ */
+    .sec {
+      padding: 44px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .sec + .sec { padding-top: 10px; }
+
+    .mantra {
+      font-family: 'Tiro Devanagari Sanskrit', serif;
+      font-size: 15px;
+      color: var(--maroon-deep);
+      line-height: 1.7;
+    }
+
+    .header-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+    }
+
+    .sec-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--maroon);
+      letter-spacing: 1px;
+    }
+
+    .lead {
+      font-size: 17px;
+      font-style: italic;
+      color: #5B4A40;
+      margin: 10px 0 14px;
+      line-height: 1.4;
+    }
+
+    .couple-name {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .and-symbol {
+      font-size: 22px;
+      color: var(--maroon-deep);
+      margin: 2px 0;
+      font-style: italic;
+    }
+
+    .hint {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: #8A7B6E;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* Scratch card */
+    .scratch-container {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      height: 150px;
+      margin: 16px 0 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 2px solid var(--gold);
+    }
+
+    .scratch-reveal-content {
+      position: absolute;
+      inset: 0;
+      background: #FFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .event-date-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: #580A14;
+      margin: 3px 0;
+    }
+
+    .event-place {
+      font-size: 14px;
+      font-style: italic;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .scratch-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      cursor: pointer;
+      touch-action: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .scratch-canvas.done { opacity: 0; pointer-events: none; }
+
+    /* Countdown medallions */
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-num {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--maroon);
+      background: radial-gradient(circle at 35% 30%, #FFFDF8, #F3E8D6);
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 4px #FFF9EE, 0 0 0 5px rgba(197,155,39,0.45), 0 6px 12px var(--shadow-soft);
+    }
+
+    .time-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7A6B5F;
+    }
+
+    .countdown-done {
+      margin-top: 16px;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--maroon);
+    }
+
+    /* Venue */
+    .details-card {
+      width: 100%;
+      background: #FFF;
+      border-radius: 16px;
+      padding: 22px 20px;
+      margin-top: 16px;
+      border: 1px solid rgba(197, 155, 39, 0.3);
+      box-shadow: 0 5px 15px var(--shadow-soft);
+    }
+
+    .venue-name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .venue-addr { font-size: 15px; color: #666; margin-top: 2px; }
+
+    .venue-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--maroon-deep);
+      color: #FFF;
+      text-decoration: none;
+      padding: 11px 22px;
+      border-radius: 22px;
+      font-size: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+    }
+
+    .footer {
+      padding: 20px 24px 50px;
+      text-align: center;
+    }
+
+    .footer p { font-size: 18px; font-style: italic; color: #5B4A40; }
+    .footer .sign { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold-dark); margin-top: 8px; letter-spacing: 1px; }
+
+    /* ============ CONTROLS: language + music ============ */
+    .controls {
+      position: absolute;
+      top: 22px;
+      right: 12px;
+      z-index: 60;
+      display: flex;
+      gap: 8px;
+    }
+
+    .ctrl {
+      height: 34px;
+      min-width: 34px;
+      padding: 0 10px;
+      border-radius: 17px;
+      border: 1px solid rgba(197, 155, 39, 0.7);
+      background: rgba(255, 251, 243, 0.92);
+      color: var(--maroon);
+      font-family: 'Tiro Devanagari Sanskrit', 'Montserrat', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ctrl[hidden] { display: none; }
+
+    .eq { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+    .eq i { width: 3px; background: var(--gold-dark); border-radius: 1px; animation: eq 0.9s ease-in-out infinite alternate; }
+    .eq i:nth-child(1) { height: 6px; }
+    .eq i:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+    .eq i:nth-child(3) { height: 8px; animation-delay: 0.4s; }
+    .ctrl.muted .eq i { animation: none; height: 3px; }
+
+    @keyframes eq { from { transform: scaleY(0.35); } to { transform: scaleY(1); } }
+    .eq i { transform-origin: bottom; }
+
+    /* Hindi mode: switch translated text to a Devanagari face */
+    html[lang="hi"] [data-hi] {
+      font-family: 'Tiro Devanagari Sanskrit', serif;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    html[lang="hi"] .couple-name { font-size: 34px; font-weight: 400; }
+    html[lang="hi"] .tap-hint { font-size: 14px; }
+    html[lang="hi"] .header-tag { font-size: 15px; }
+    html[lang="hi"] .hero-date { font-size: 15px; }
+    html[lang="hi"] .hint { font-size: 13px; }
+    html[lang="hi"] .scroll-hint { font-size: 13px; }
+    html[lang="hi"] .t-time { font-size: 14px; }
+    html[lang="hi"] .time-label { font-size: 12px; }
+    html[lang="hi"] .venue-btn { font-size: 14px; }
+    html[lang="hi"] .sign { font-size: 17px; }
+
+    /* Seal "break" on tap */
+    .intro.open .seal { animation: sealPop 0.35s ease-out; }
+    @keyframes sealPop {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      40% { transform: translate(-50%, -50%) scale(0.9) rotate(-3deg); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* ============ SCROLL-IN ANIMATIONS ============ */
+    .rv {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .rv.in { opacity: 1; transform: none; }
+
+    .rv .divider::before, .rv .divider::after {
+      transform: scaleX(0);
+      transition: transform 1s ease 0.3s;
+    }
+    .rv .divider::before { transform-origin: right; }
+    .rv .divider::after { transform-origin: left; }
+    .rv.in .divider::before, .rv.in .divider::after { transform: scaleX(1); }
+
+    /* ============ PHOTOS: jharokha arches ============ */
+    .gallery {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .gallery .row { display: flex; gap: 14px; width: 100%; justify-content: center; }
+
+    .arch {
+      margin: 0;
+      padding: 6px;
+      background: #FFF;
+      border: 1.5px solid var(--gold);
+      border-radius: 999px 999px 14px 14px;
+      box-shadow: 0 0 0 4px #FFF9EE, 0 0 0 5px rgba(197,155,39,0.35), 0 10px 22px var(--shadow-soft);
+      width: 46%;
+    }
+
+    .arch.big { width: 76%; }
+
+    .arch img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 999px 999px 10px 10px;
+      background: #F3E8D6;
+    }
+
+    /* ============ CELEBRATIONS TIMELINE ============ */
+    .timeline {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      margin-top: 22px;
+      text-align: left;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 29px;
+      top: 20px;
+      bottom: 20px;
+      border-left: 2px dotted var(--gold);
+    }
+
+    .t-item {
+      position: relative;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .t-icon {
+      flex: 0 0 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 35% 30%, #FFFDF8, #F3E8D6);
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 4px #FFF9EE, 0 0 0 5px rgba(197,155,39,0.4), 0 6px 12px var(--shadow-soft);
+      z-index: 1;
+    }
+
+    .t-icon svg { width: 36px; height: 36px; }
+
+    .t-name { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 700; color: var(--maroon); }
+    html[lang="hi"] .t-name { font-size: 20px; font-weight: 400; }
+    .t-when { font-size: 16px; color: #5B4A40; }
+    .t-time { font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 1px; color: var(--gold-dark); margin-top: 2px; }
+    .t-place { font-style: italic; font-size: 14px; color: #7A6B5F; }
+
+    /* ============ FOOTER: toran + diyas ============ */
+    .toran { width: 100%; max-width: 360px; height: 56px; display: block; margin: 0 auto 6px; overflow: visible; }
+    .toran .hang {
+      transform-box: fill-box;
+      transform-origin: 50% 0;
+      animation: sway 3.2s ease-in-out infinite alternate;
+    }
+    @keyframes sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+
+    .diya-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+    .diya { width: 46px; height: 46px; flex: none; }
+    .diya .flame {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+      animation: flicker 0.9s ease-in-out infinite alternate;
+    }
+    .diya .flame.inner { animation-duration: 0.7s; }
+    .diya .glow { animation: glow 1.6s ease-in-out infinite alternate; }
+    @keyframes flicker {
+      0% { transform: scale(1, 1) rotate(-2deg); }
+      50% { transform: scale(0.94, 1.08) rotate(1deg); }
+      100% { transform: scale(1.03, 0.95) rotate(2deg); }
+    }
+    @keyframes glow { from { opacity: 0.55; } to { opacity: 1; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .door { transition-duration: 0.4s; }
+      .seal, .tap-hint, .scroll-hint svg, .toran .hang, .diya .flame, .diya .glow, .eq i { animation: none; }
+      .rv { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- STEPS 2 & 3: scrolling page (stage + invitation) -->
+    <main class="scroller locked" id="scroller">
+
+      <!-- Curtain stage -->
+      <section class="stage" id="stage">
+        <div class="hero" id="hero">
+          <div class="shri">॥ श्री गणेशाय नमः ॥</div>
+          <div class="divider">✦</div>
+          <div class="hero-name" data-hi="अंजलि">Anjali</div>
+          <div class="hero-amp" data-hi="संग">&amp;</div>
+          <div class="hero-name" data-hi="मोहित">Mohit</div>
+          <div class="divider">✦</div>
+          <div><div class="hero-date" data-hi="२५ · जनवरी · २०२७">25 · JANUARY · 2027</div><div class="hero-place" data-hi="जोधपुर, राजस्थान">Jodhpur, Rajasthan</div></div>
+          <button class="scroll-hint" id="scrollHint" aria-label="Scroll to invitation">
+            <span data-hi="नीचे देखें">SCROLL</span>
+            <svg width="16" height="10" viewBox="0 0 16 10"><path d="M1 1 L8 8 L15 1" fill="none" stroke="#C59B27" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+
+        <svg class="curtains" id="curtainSvg" aria-hidden="true"></svg>
+
+        <!-- Venue illustration: Rajasthani palace & garden -->
+        <svg class="venue" id="venueSvg" viewBox="0 0 400 240" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#F7ECD7"/><stop offset="1" stop-color="#EAD8B9"/>
+            </linearGradient>
+            <linearGradient id="dome" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#E5CFA6"/><stop offset=".45" stop-color="#FCF3E2"/><stop offset="1" stop-color="#D8BD8C"/>
+            </linearGradient>
+            <pattern id="merlon" width="10" height="8" patternUnits="userSpaceOnUse">
+              <path d="M1 8 V4 Q5 0 9 4 V8 Z" fill="#F3E5CB" stroke="#CDAE74" stroke-width=".6"/>
+            </pattern>
+            <pattern id="hedgeDots" width="9" height="6" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.1" fill="#FFF8EC"/><circle cx="6.5" cy="4.5" r=".9" fill="#F2C7D0"/>
+            </pattern>
+            <symbol id="win" viewBox="0 0 16 28">
+              <path d="M1 28 V11 Q1 4 8 1 Q15 4 15 11 V28 Z" fill="#7B3038" stroke="#C59B27" stroke-width="1"/>
+              <path d="M5 28 V13 Q5 8 8 6 Q11 8 11 13 V28" fill="none" stroke="#B5843F" stroke-width=".7"/>
+            </symbol>
+            <symbol id="jharokha" viewBox="0 0 30 42">
+              <path d="M3 11 Q3 1 15 0 Q27 1 27 11 Z" fill="url(#dome)" stroke="#CDAE74" stroke-width=".8"/>
+              <rect x="0" y="10" width="30" height="3.5" fill="#E2CDA6" stroke="#CDAE74" stroke-width=".6"/>
+              <rect x="3" y="13.5" width="24" height="21" fill="#F4E6CC" stroke="#CDAE74" stroke-width=".6"/>
+              <path d="M7 34.5 V22 Q7 17 15 15.5 Q23 17 23 22 V34.5 Z" fill="#7B3038" stroke="#C59B27" stroke-width=".8"/>
+              <rect x="1" y="34.5" width="28" height="3" fill="#E2CDA6" stroke="#CDAE74" stroke-width=".6"/>
+              <path d="M4 37.5 L8 42 L12 37.5 Z M18 37.5 L22 42 L26 37.5 Z" fill="#E2CDA6" stroke="#CDAE74" stroke-width=".6"/>
+            </symbol>
+            <symbol id="chhatri" viewBox="0 0 30 34">
+              <path d="M15 3.5 V0" stroke="#C59B27" stroke-width="1.2"/>
+              <path d="M3 15 Q3 5 15 3 Q27 5 27 15 Z" fill="url(#dome)" stroke="#CDAE74" stroke-width=".8"/>
+              <rect x="0" y="15" width="30" height="3" fill="#E2CDA6" stroke="#CDAE74" stroke-width=".6"/>
+              <path d="M6 30 V23 Q6 20 9.75 19.5 Q13.5 20 13.5 23 V30 Z M16.5 30 V23 Q16.5 20 20.25 19.5 Q24 20 24 23 V30 Z" fill="#8A4A50" opacity=".55"/>
+              <rect x="3" y="18" width="3" height="12" fill="#EFE0C4" stroke="#CDAE74" stroke-width=".5"/>
+              <rect x="13.5" y="18" width="3" height="12" fill="#EFE0C4" stroke="#CDAE74" stroke-width=".5"/>
+              <rect x="24" y="18" width="3" height="12" fill="#EFE0C4" stroke="#CDAE74" stroke-width=".5"/>
+              <rect x="0" y="30" width="30" height="4" fill="#E2CDA6" stroke="#CDAE74" stroke-width=".6"/>
+            </symbol>
+            <g id="trees">
+              <ellipse cx="32" cy="150" rx="13" ry="52" fill="#6B8162"/>
+              <ellipse cx="50" cy="164" rx="10" ry="38" fill="#7E946F"/>
+            </g>
+            <g id="boug">
+              <circle cx="60" cy="116" r="4" fill="#C0517B"/><circle cx="66" cy="121" r="3.5" fill="#D97FA0"/>
+              <circle cx="58" cy="124" r="3.6" fill="#C0517B"/><circle cx="64" cy="129" r="3" fill="#D97FA0"/>
+              <circle cx="70" cy="115" r="3" fill="#B04670"/><circle cx="61" cy="134" r="2.8" fill="#C0517B"/>
+              <circle cx="57" cy="141" r="2.6" fill="#D97FA0"/><circle cx="74" cy="119" r="2.4" fill="#D97FA0"/>
+              <circle cx="56" cy="110" r="3" fill="#B04670"/><circle cx="62" cy="147" r="2.2" fill="#B04670"/>
+            </g>
+          </defs>
+
+          <use href="#trees"/>
+          <use href="#trees" transform="translate(400 0) scale(-1 1)"/>
+
+          <!-- Upper storey & dome -->
+          <rect x="182" y="50" width="36" height="14" fill="url(#wall)" stroke="#CDAE74"/>
+          <path d="M176 50 Q176 24 200 15 Q224 24 224 50 Z" fill="url(#dome)" stroke="#CDAE74"/>
+          <path d="M176 50 H224" stroke="#C59B27" stroke-width="2"/>
+          <path d="M200 15 V5" stroke="#C59B27" stroke-width="1.5"/>
+          <circle cx="200" cy="11" r="2.4" fill="#C59B27"/><circle cx="200" cy="5" r="1.8" fill="#C59B27"/>
+          <rect x="110" y="72" width="180" height="40" fill="url(#wall)" stroke="#CDAE74"/>
+          <rect x="110" y="64" width="180" height="8" fill="url(#merlon)"/>
+          <rect x="106" y="71" width="188" height="3" fill="#E2CDA6"/>
+          <use href="#chhatri" x="104" y="40" width="22" height="25"/>
+          <use href="#chhatri" x="274" y="40" width="22" height="25"/>
+          <use href="#win" x="122" y="80" width="12" height="22"/>
+          <use href="#win" x="144" y="80" width="12" height="22"/>
+          <use href="#win" x="244" y="80" width="12" height="22"/>
+          <use href="#win" x="266" y="80" width="12" height="22"/>
+          <use href="#jharokha" x="186" y="72" width="28" height="39"/>
+
+          <!-- Lower storey -->
+          <rect x="60" y="112" width="280" height="80" fill="url(#wall)" stroke="#CDAE74"/>
+          <rect x="60" y="104" width="280" height="8" fill="url(#merlon)"/>
+          <rect x="56" y="111" width="288" height="3" fill="#E2CDA6"/>
+          <g stroke="#DCC59B" stroke-width="1"><path d="M108 114 V192 M160 114 V192 M240 114 V192 M292 114 V192"/></g>
+          <use href="#chhatri" x="62" y="70" width="30" height="34"/>
+          <use href="#chhatri" x="308" y="70" width="30" height="34"/>
+          <use href="#jharokha" x="72" y="122" width="30" height="42"/>
+          <use href="#jharokha" x="298" y="122" width="30" height="42"/>
+          <use href="#win" x="116" y="136" width="13" height="24"/>
+          <use href="#win" x="138" y="136" width="13" height="24"/>
+          <use href="#win" x="249" y="136" width="13" height="24"/>
+          <use href="#win" x="271" y="136" width="13" height="24"/>
+
+          <!-- Grand doorway with toran -->
+          <path d="M170 192 V156 Q170 131 200 122 Q230 131 230 156 V192 Z" fill="#EFDDBC" stroke="#C59B27" stroke-width="1.2"/>
+          <path d="M179 192 V160 Q179 141 200 135 Q221 141 221 160 V192 Z" fill="#7B3038" stroke="#C59B27"/>
+          <path d="M200 137 V192" stroke="#5E2229" stroke-width="1"/>
+          <g fill="#C59B27"><circle cx="190" cy="165" r="1.2"/><circle cx="210" cy="165" r="1.2"/><circle cx="190" cy="178" r="1.2"/><circle cx="210" cy="178" r="1.2"/></g>
+          <path d="M172 138 Q200 152 228 138" stroke="#6B8162" stroke-width="3" stroke-dasharray="2.5 2" fill="none"/>
+          <path d="M176 141 Q200 154 224 141" stroke="#E0A030" stroke-width="2" stroke-dasharray="1.5 3" fill="none"/>
+
+          <use href="#boug"/>
+          <use href="#boug" transform="translate(400 0) scale(-1 1)"/>
+
+          <rect x="54" y="192" width="292" height="7" fill="#E2CFAE" stroke="#CDAE74"/>
+
+          <!-- Garden -->
+          <rect x="0" y="199" width="400" height="41" fill="#EFE5D3"/>
+          <path d="M174 199 H226 L254 240 H146 Z" fill="#E6D6BA"/>
+          <rect x="174" y="199" width="52" height="3" fill="#E9D9BC"/>
+          <rect x="10" y="205" width="140" height="13" rx="6" fill="#6B8162"/>
+          <rect x="10" y="205" width="140" height="13" rx="6" fill="url(#hedgeDots)"/>
+          <rect x="250" y="205" width="140" height="13" rx="6" fill="#6B8162"/>
+          <rect x="250" y="205" width="140" height="13" rx="6" fill="url(#hedgeDots)"/>
+
+          <!-- Fountain -->
+          <ellipse cx="200" cy="221" rx="46" ry="9" fill="#E4D2B0" stroke="#CDAE74"/>
+          <ellipse cx="200" cy="220" rx="40" ry="6.5" fill="#A9C9C2"/>
+          <rect x="196.5" y="201" width="7" height="19" fill="#EBDDC1" stroke="#CDAE74" stroke-width=".6"/>
+          <ellipse cx="200" cy="201" rx="14" ry="3.5" fill="#E4D2B0" stroke="#CDAE74" stroke-width=".8"/>
+          <path d="M200 196 Q189 186 185 201 M200 196 Q211 186 215 201 M200 197 V185" stroke="#BFDCD6" stroke-width="1.4" fill="none"/>
+
+          <g id="roses"></g>
+        </svg>
+      </section>
+
+      <!-- Invitation -->
+      <section class="sec rv" id="invite">
+        <div class="mantra">॥ वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ॥</div>
+        <div class="mantra">॥ निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</div>
+        <div class="divider" style="margin:20px 0;">✦</div>
+        <div class="header-tag" data-hi="ईश्वर की असीम कृपा से">With the blessings of the Almighty</div>
+        <div class="header-tag" style="margin-top:6px;" data-hi="परिहार परिवार">The Parihar Family</div>
+        <p class="lead" data-hi="आपको सादर आमंत्रित करता है<br>शुभ विवाह समारोह में">requests the pleasure of your company<br>at the wedding celebrations of</p>
+        <div class="couple-name" data-hi="अंजलि">ANJALI</div>
+        <div class="and-symbol" data-hi="संग">&amp;</div>
+        <div class="couple-name" data-hi="मोहित">MOHIT</div>
+      </section>
+
+      <!-- Photos: put files at assets/photo1.jpg, photo2.jpg, photo3.jpg (missing ones hide automatically) -->
+      <section class="sec rv" id="photos">
+        <div class="divider">✦</div>
+        <h2 class="sec-title" data-hi="हमारे पल">Our Moments</h2>
+        <div class="gallery">
+          <figure class="arch big"><img src="assets/photo1.jpg" alt="Anjali and Mohit" loading="lazy"></figure>
+          <div class="row">
+            <figure class="arch"><img src="assets/photo2.jpg" alt="Anjali and Mohit" loading="lazy"></figure>
+            <figure class="arch"><img src="assets/photo3.jpg" alt="Anjali and Mohit" loading="lazy"></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec rv">
+        <h2 class="sec-title" data-hi="शुभ तिथियाँ">Save the Dates</h2>
+        <p class="hint" data-hi="तिथियाँ देखने के लिए सुनहरी परत खुरचें">Scratch the foil to reveal</p>
+        <div class="scratch-container">
+          <div class="scratch-reveal-content">
+            <div class="event-date-text" data-hi="🎶 संगीत: रविवार, २४ जनवरी २०२७">🎶 Sangeet: Sunday, 24th Jan 2027</div>
+            <div class="event-date-text" data-hi="💛 हल्दी: सोमवार, २५ जनवरी २०२७">💛 Haldi: Monday, 25th Jan 2027</div>
+            <div class="event-date-text" data-hi="💍 शुभ विवाह: सोमवार, २५ जनवरी २०२७">💍 Wedding: Monday, 25th Jan 2027</div>
+            <p class="event-place" data-hi="सिसोदिया गार्डन, जोधपुर">Sisodiya Garden, Jodhpur</p>
+          </div>
+          <canvas class="scratch-canvas" id="scratchCanvas" aria-label="Scratch to reveal the dates"></canvas>
+        </div>
+      </section>
+
+      <section class="sec rv">
+        <div class="divider">✦</div>
+        <h2 class="sec-title" data-hi="मांगलिक कार्यक्रम">Celebrations</h2>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-icon">
+              <!-- dholak -->
+              <svg viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M8 13 Q20 8 32 13 V27 Q20 32 8 27 Z" fill="#B5485E" stroke="#7B3038"/>
+                <path d="M10 13.5 L14 27 L18 12 L22 28 L26 12 L30 27" fill="none" stroke="#E6C15A" stroke-width="1.2"/>
+                <ellipse cx="8" cy="20" rx="3" ry="7" fill="#F3E6D3" stroke="#7B3038"/>
+                <ellipse cx="32" cy="20" rx="3" ry="7" fill="#F3E6D3" stroke="#7B3038"/>
+              </svg>
+            </div>
+            <div>
+              <div class="t-name" data-hi="संगीत संध्या">Sangeet</div>
+              <div class="t-when" data-hi="रविवार, २४ जनवरी २०२७">Sunday, 24 January 2027</div>
+              <!-- TODO: add Sangeet time -->
+              <div class="t-place" data-hi="सिसोदिया गार्डन">Sisodiya Garden</div>
+            </div>
+          </div>
+          <div class="t-item">
+            <div class="t-icon">
+              <!-- haldi bowl -->
+              <svg viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M6 20 H34 Q33 32 20 33 Q7 32 6 20 Z" fill="#C2703D" stroke="#8A4A22"/>
+                <path d="M9 24 Q20 27 31 24" fill="none" stroke="#E7A04A" stroke-width="1.2"/>
+                <ellipse cx="20" cy="20" rx="14" ry="3.4" fill="#F2B705" stroke="#C98F00" stroke-width=".8"/>
+                <ellipse cx="25" cy="13" rx="5" ry="2" fill="#6B8162" transform="rotate(-30 25 13)"/>
+                <circle cx="14" cy="15" r="3.4" fill="#F39C12"/><circle cx="14" cy="15" r="1.4" fill="#C0640A"/>
+                <circle cx="20" cy="12" r="2.8" fill="#F5B041"/><circle cx="20" cy="12" r="1.1" fill="#C0640A"/>
+              </svg>
+            </div>
+            <div>
+              <div class="t-name" data-hi="हल्दी">Haldi</div>
+              <div class="t-when" data-hi="सोमवार, २५ जनवरी २०२७">Monday, 25 January 2027</div>
+              <div class="t-time" data-hi="प्रातः ११:०० – दोपहर २:००">11:00 AM – 2:00 PM</div>
+              <div class="t-place" data-hi="सिसोदिया गार्डन">Sisodiya Garden</div>
+            </div>
+          </div>
+          <div class="t-item">
+            <div class="t-icon">
+              <!-- havan kund / sacred fire -->
+              <svg viewBox="0 0 40 40" aria-hidden="true">
+                <path d="M20 6 C27 13 27 19 22.5 24 C24.5 18 21.5 16 20 13 C18.5 17 14.5 18 17.5 24 C13 20 13.5 13 20 6 Z" fill="#F39C12"/>
+                <path d="M20 14 C23 18 22.5 21 20 24 C17.5 21 17 18 20 14 Z" fill="#FFE27A"/>
+                <path d="M9 24 H31 L28.5 29 H11.5 Z" fill="#C9A35B" stroke="#8A6A2A"/>
+                <path d="M7 29 H33 L31 34 H9 Z" fill="#B5843F" stroke="#7B5A22"/>
+              </svg>
+            </div>
+            <div>
+              <div class="t-name" data-hi="शुभ विवाह">Shubh Vivah</div>
+              <div class="t-when" data-hi="सोमवार, २५ जनवरी २०२७">Monday, 25 January 2027</div>
+              <!-- TODO: add wedding / pheras time -->
+              <div class="t-place" data-hi="सिसोदिया गार्डन">Sisodiya Garden</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec rv">
+        <h2 class="sec-title" data-hi="शुभ मुहूर्त की प्रतीक्षा">Countdown to Muhurat</h2>
+        <div class="countdown-timer" id="countdown">
+          <div class="time-block"><span class="time-num" id="days">00</span><span class="time-label" data-hi="दिन">Days</span></div>
+          <div class="time-block"><span class="time-num" id="hours">00</span><span class="time-label" data-hi="घंटे">Hours</span></div>
+          <div class="time-block"><span class="time-num" id="mins">00</span><span class="time-label" data-hi="मिनट">Mins</span></div>
+          <div class="time-block"><span class="time-num" id="secs">00</span><span class="time-label" data-hi="सेकंड">Secs</span></div>
+        </div>
+        <p class="countdown-done" id="countdownDone" hidden data-hi="मंगल उत्सव आरंभ हो चुका है! 🎉">The celebrations have begun! 🎉</p>
+      </section>
+
+      <section class="sec rv">
+        <h2 class="sec-title" data-hi="विवाह स्थल">The Venue</h2>
+        <div class="details-card">
+          <div class="venue-name" data-hi="सिसोदिया गार्डन">Sisodiya Garden</div>
+          <p class="venue-addr" data-hi="पाल रोड, जोधपुर, राजस्थान">Pal Road, Jodhpur, Rajasthan</p>
+          <a href="https://maps.google.com/?q=Sisodiya+Garden+Pal+Road+Jodhpur" target="_blank" rel="noopener" class="venue-btn" data-hi="📍 रास्ता देखें">📍 Get Directions</a>
+        </div>
+      </section>
+
+      <footer class="footer rv">
+        <svg class="toran" id="toran" viewBox="0 0 340 56" aria-hidden="true"></svg>
+        <div class="diya-row">
+          <span class="diya-slot"></span>
+          <p data-hi="आपकी उपस्थिति ही हमारा सौभाग्य है">Your presence will make our celebration complete</p>
+          <span class="diya-slot"></span>
+        </div>
+        <div class="sign" data-hi="स्नेहाकांक्षी — परिहार परिवार">With love, The Parihar Family</div>
+      </footer>
+    </main>
+
+    <canvas id="petals"></canvas>
+
+    <!-- STEP 1: sliding doors with monogram seal -->
+    <div class="intro" id="intro" role="button" tabindex="0" aria-label="Tap to open the invitation">
+      <div class="door door-l"></div>
+      <div class="door door-r">
+        <svg class="seal" viewBox="0 0 120 160" aria-hidden="true">
+          <defs>
+            <linearGradient id="sealFill" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFFDF7"/><stop offset="1" stop-color="#F1E3C8"/>
+            </linearGradient>
+          </defs>
+          <path d="M24 6 H96 Q98 18 114 20 V58 Q106 69 114 80 Q106 91 114 102 V140 Q98 142 96 154 H24 Q22 142 6 140 V102 Q14 91 6 80 Q14 69 6 58 V20 Q22 18 24 6 Z" fill="url(#sealFill)" stroke="#D9C49A" stroke-width="1.5"/>
+          <path d="M24 6 H96 Q98 18 114 20 V58 Q106 69 114 80 Q106 91 114 102 V140 Q98 142 96 154 H24 Q22 142 6 140 V102 Q14 91 6 80 Q14 69 6 58 V20 Q22 18 24 6 Z" fill="none" stroke="#C59B27" stroke-width="1.3" transform="translate(60 80) scale(.85) translate(-60 -80)"/>
+          <g fill="none" stroke="#C59B27" stroke-width="1.2" stroke-linecap="round">
+            <path d="M40 34 Q50 24 60 33 Q70 24 80 34"/>
+            <path d="M40 34 q-7 3 -3 9 q4 4 7 -1"/>
+            <path d="M80 34 q7 3 3 9 q-4 4 -7 -1"/>
+            <path d="M40 126 Q50 136 60 127 Q70 136 80 126"/>
+            <path d="M40 126 q-7 -3 -3 -9 q4 -4 7 1"/>
+            <path d="M80 126 q7 -3 3 -9 q-4 -4 -7 1"/>
+          </g>
+          <circle cx="60" cy="13" r="3.2" fill="#FFFFFF" stroke="#D9C49A" stroke-width=".8"/>
+          <circle cx="60" cy="147" r="3.2" fill="#FFFFFF" stroke="#D9C49A" stroke-width=".8"/>
+          <text x="60" y="92" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="36" font-weight="500" fill="#B08A3C">A<tspan font-size="22" font-style="italic" dx="2" dy="-5">&amp;</tspan><tspan dx="2" dy="5">M</tspan></text>
+        </svg>
+      </div>
+      <div class="tap-hint" data-hi="खोलने के लिए स्पर्श करें">TAP TO OPEN</div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl" id="musicBtn" hidden aria-label="Mute music"><span class="eq"><i></i><i></i><i></i></span></button>
+      <button class="ctrl" id="langBtn" aria-label="Switch language">हिंदी</button>
+    </div>
+
+    <!-- Background music: place the file at assets/music.mp3 (button stays hidden if missing) -->
+    <audio id="bgm" src="assets/music.mp3" loop preload="auto"></audio>
+  </div>
+
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $ = (id) => document.getElementById(id);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const clamp01 = (t) => Math.max(0, Math.min(1, t));
+    const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const intro = $('intro'), scroller = $('scroller'), stage = $('stage'), hero = $('hero');
+    const curtainSvg = $('curtainSvg'), venueSvg = $('venueSvg');
+
+    /* ---------- Roses along the bottom of the venue ---------- */
+    (function addRoses() {
+      const g = $('roses');
+      const cols = [['#C97B86', '#E5A9B1', '#9E4A57'], ['#F3E6D3', '#FFF8EE', '#D9C2A3'], ['#B85C6B', '#D88A97', '#8E3A48']];
+      let html = '';
+      for (let x = -4, i = 0; x < 410; x += 15, i++) {
+        const [c, l, d] = cols[i % 3];
+        const y = 233 + (i % 2) * 3;
+        html += `<ellipse cx="${x + 8}" cy="${y - 4}" rx="5" ry="2.4" fill="#6B8162" transform="rotate(-25 ${x + 8} ${y - 4})"/>`;
+        html += `<circle cx="${x}" cy="${y}" r="7.5" fill="${c}" stroke="${d}" stroke-width=".7"/>`;
+        html += `<circle cx="${x}" cy="${y}" r="4.6" fill="${l}" stroke="${d}" stroke-width=".6"/>`;
+        html += `<circle cx="${x}" cy="${y}" r="2" fill="${d}"/>`;
+      }
+      g.innerHTML = html;
+    })();
+
+    /* ---------- Curtains (drawn as SVG so they can gather & tie back) ---------- */
+    const NS = 'http://www.w3.org/2000/svg';
+    const FOLDS = 11, SAMPLES = 24, TIE = 0.56;
+    const C = { p: 0, W: 0, H: 0, Hc: 0, parts: null };
+
+    function mk(tag, attrs, parent) {
+      const e = document.createElementNS(NS, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+
+    function buildCurtains() {
+      curtainSvg.innerHTML = `
+        <defs>
+          <filter id="cBlur" x="-20%" y="-5%" width="140%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter>
+          <filter id="cShadow" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5A3D22" flood-opacity=".28"/></filter>
+          <linearGradient id="swagGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#EFE4D1"/><stop offset=".75" stop-color="#FFFBF4"/><stop offset="1" stop-color="#E2D4BD"/>
+          </linearGradient>
+        </defs>`;
+      const parts = {};
+      for (const side of ['L', 'R']) {
+        const g = mk('g', { filter: 'url(#cShadow)' }, curtainSvg);
+        const base = mk('path', { fill: '#EDE2CE' }, g);
+        const shades = mk('g', { filter: 'url(#cBlur)' }, g);
+        const shadow = Array.from({ length: FOLDS + 1 }, () => mk('path', { fill: '#C7B391', opacity: 0.75 }, shades));
+        const ridge = Array.from({ length: FOLDS }, () => mk('path', { fill: '#FFFCF6' }, shades));
+        const cord = mk('path', { fill: 'none', stroke: '#C59B27', 'stroke-width': 1.6 }, g);
+        const pearlSh = mk('path', { fill: 'none', stroke: '#B9A27E', 'stroke-width': 5.4, 'stroke-linecap': 'round', 'stroke-dasharray': '0 8', transform: 'translate(.7 1)' }, g);
+        const pearl = mk('path', { fill: 'none', stroke: '#FFFDF8', 'stroke-width': 4.6, 'stroke-linecap': 'round', 'stroke-dasharray': '0 8' }, g);
+        const tie = mk('g', { opacity: 0 }, g);
+        const band = mk('path', { fill: '#C59B27', stroke: '#A27B13', 'stroke-width': 0.8 }, tie);
+        const tassel = mk('path', { fill: 'none', stroke: '#A27B13', 'stroke-width': 1.4, 'stroke-linecap': 'round' }, tie);
+        const knob = mk('circle', { r: 3.5, fill: '#C59B27', stroke: '#A27B13', 'stroke-width': 0.8 }, tie);
+        parts[side] = { base, shadow, ridge, cord, pearlSh, pearl, tie, band, tassel, knob };
+      }
+      parts.val = mk('g', { filter: 'url(#cShadow)' }, curtainSvg);
+      C.parts = parts;
+    }
+
+    // Inner edge x-position (for the left curtain) as a function of y, at progress p
+    function edgeFn(p) {
+      const { W, Hc } = C;
+      const xt = lerp(W / 2, W * 0.30, p);  // top
+      const xi = lerp(W / 2, W * 0.10, p);  // at the tie-back
+      const xb = lerp(W / 2, W * 0.21, p);  // bottom flare
+      const yT = TIE * Hc;
+      const fn = (y) => {
+        if (y <= yT) { const u = y / yT, e = u * u * (3 - 2 * u); return lerp(xt, xi, e); }
+        const u = (y - yT) / (Hc - yT), e = 1 - (1 - u) * (1 - u);
+        return lerp(xi, xb, e);
+      };
+      fn.xi = xi; fn.yT = yT;
+      return fn;
+    }
+
+    function drawCurtains(p) {
+      if (!C.parts || !C.W) return;
+      const { W, Hc } = C;
+      const edge = edgeFn(p);
+      const ys = [];
+      const half = SAMPLES / 2;
+      for (let i = 0; i <= half; i++) ys.push(edge.yT * i / half);
+      for (let i = 1; i <= half; i++) ys.push(edge.yT + (Hc - edge.yT) * i / half);
+
+      for (const side of ['L', 'R']) {
+        const P = C.parts[side];
+        const X = side === 'L' ? (f, y) => f * edge(y) : (f, y) => W - f * edge(y);
+        const mx = side === 'L' ? (x) => x : (x) => W - x;
+        const strip = (f0, f1) => {
+          let d = '';
+          for (let i = 0; i < ys.length; i++) d += (i ? 'L' : 'M') + X(f0, ys[i]).toFixed(1) + ' ' + ys[i].toFixed(1);
+          for (let i = ys.length - 1; i >= 0; i--) d += 'L' + X(f1, ys[i]).toFixed(1) + ' ' + ys[i].toFixed(1);
+          return d + 'Z';
+        };
+        P.base.setAttribute('d', strip(0, 1));
+        P.shadow.forEach((el, k) => el.setAttribute('d', strip(Math.max(0, (k - 0.13) / FOLDS), Math.min(1, (k + 0.13) / FOLDS))));
+        P.ridge.forEach((el, k) => el.setAttribute('d', strip((k + 0.3) / FOLDS, (k + 0.7) / FOLDS)));
+
+        // Trim: down the inner edge, then along the hem
+        let t = '';
+        ys.forEach((y, i) => { t += (i ? 'L' : 'M') + X(1, y).toFixed(1) + ' ' + y.toFixed(1); });
+        for (let i = 1; i <= 8; i++) t += 'L' + X(1 - i / 8, Hc).toFixed(1) + ' ' + Hc.toFixed(1);
+        P.cord.setAttribute('d', t);
+        P.pearlSh.setAttribute('d', t);
+        P.pearl.setAttribute('d', t);
+
+        // Gold tie-back band + tassel
+        const xi = edge.xi, yT = edge.yT;
+        P.tie.setAttribute('opacity', clamp01((p - 0.65) / 0.35).toFixed(2));
+        P.band.setAttribute('d', `M${mx(0)} ${yT - 6} Q${mx(xi / 2)} ${yT - 1} ${mx(xi + 3)} ${yT - 2} L${mx(xi + 3)} ${yT + 4} Q${mx(xi / 2)} ${yT + 6} ${mx(0)} ${yT + 7} Z`);
+        P.tassel.setAttribute('d', `M${mx(xi + 2)} ${yT + 2} C${mx(xi + 6)} ${yT + 10} ${mx(xi + 1)} ${yT + 16} ${mx(xi + 4)} ${yT + 24}`);
+        P.knob.setAttribute('cx', mx(xi + 2));
+        P.knob.setAttribute('cy', yT + 1);
+      }
+    }
+
+    function drawValance() {
+      const g = C.parts.val;
+      g.innerHTML = '';
+      const W = C.W, n = W < 380 ? 3 : 4, top = 12;
+      const d = Math.min(48, C.H * 0.06);
+      mk('rect', { x: 0, y: 0, width: W, height: top + 2, fill: '#F4EADA' }, g);
+      for (let i = 0; i < n; i++) {
+        const x0 = i * W / n, x1 = (i + 1) * W / n, xm = (x0 + x1) / 2, inset = (x1 - x0) * 0.04;
+        mk('path', { d: `M${x0} 0 H${x1} V${top} Q${xm} ${top + 2 * d} ${x0} ${top} Z`, fill: 'url(#swagGrad)' }, g);
+        for (const j of [0.35, 0.6, 0.82]) {
+          mk('path', { d: `M${x0 + inset} ${top} Q${xm} ${top + 2 * d * j} ${x1 - inset} ${top}`, fill: 'none', stroke: '#D3C2A4', 'stroke-width': 1.1, opacity: 0.8 }, g);
+        }
+        const string = `M${x0} ${top} Q${xm} ${top + 2 * d - 5} ${x1} ${top}`;
+        mk('path', { d: string, fill: 'none', stroke: '#B9A27E', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-dasharray': '0 7', transform: 'translate(.6 .9)' }, g);
+        mk('path', { d: string, fill: 'none', stroke: '#FFFDF8', 'stroke-width': 4.2, 'stroke-linecap': 'round', 'stroke-dasharray': '0 7' }, g);
+      }
+      mk('path', { d: `M0 ${top} H${W}`, stroke: '#C59B27', 'stroke-width': 1.6 }, g);
+      for (let i = 0; i <= n; i++) {
+        const x = i * W / n;
+        mk('circle', { cx: x, cy: top, r: 7, fill: '#C59B27', stroke: '#A27B13', 'stroke-width': 0.8 }, g);
+        mk('circle', { cx: x, cy: top, r: 3.4, fill: '#FFFDF8' }, g);
+      }
+    }
+
+    function layoutStage() {
+      C.W = stage.clientWidth;
+      C.H = stage.clientHeight;
+      if (!C.W || !C.H) return;
+      const vh = venueSvg.getBoundingClientRect().height;
+      stage.style.setProperty('--venue-h', vh + 'px');
+      C.Hc = C.H - vh + Math.min(30, vh * 0.15);
+      curtainSvg.setAttribute('viewBox', `0 0 ${C.W} ${C.H}`);
+      drawValance();
+      drawCurtains(C.p);
+    }
+
+    function animateCurtains(ms, onText, onDone) {
+      const t0 = performance.now();
+      let textShown = false;
+      function step(now) {
+        const t = Math.min(1, (now - t0) / ms);
+        C.p = easeInOutCubic(t);
+        drawCurtains(C.p);
+        if (!textShown && t > 0.42) { textShown = true; onText(); }
+        if (t < 1) requestAnimationFrame(step); else onDone();
+      }
+      requestAnimationFrame(step);
+    }
+
+    buildCurtains();
+    layoutStage();
+    if ('ResizeObserver' in window) new ResizeObserver(layoutStage).observe(stage);
+    else window.addEventListener('resize', layoutStage);
+
+    /* ---------- Falling petals ---------- */
+    function startPetals() {
+      if (reducedMotion) return;
+      const cv = $('petals'), c = cv.getContext('2d');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const W = cv.clientWidth, H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const colors = ['#B5485E', '#D98C9A', '#C59B27', '#F3D9C8', '#8E1F35'];
+      const petals = Array.from({ length: 46 }, () => ({
+        x: Math.random() * W, y: -20 - Math.random() * H * 0.8,
+        s: 5 + Math.random() * 6, vy: 0.7 + Math.random() * 1.1, vx: -0.3 + Math.random() * 0.6,
+        r: Math.random() * 6.28, vr: -0.04 + Math.random() * 0.08, ph: Math.random() * 6.28,
+        col: colors[Math.floor(Math.random() * colors.length)]
+      }));
+      (function frame() {
+        c.clearRect(0, 0, W, H);
+        let alive = 0;
+        for (const p of petals) {
+          if (p.y > H + 20) continue;
+          alive++;
+          p.ph += 0.03; p.y += p.vy; p.x += p.vx + Math.sin(p.ph) * 0.5; p.r += p.vr;
+          c.save();
+          c.translate(p.x, p.y); c.rotate(p.r); c.scale(1, Math.abs(Math.cos(p.ph)) * 0.5 + 0.5);
+          c.globalAlpha = 0.85; c.fillStyle = p.col;
+          c.beginPath(); c.ellipse(0, 0, p.s, p.s * 0.6, 0, 0, Math.PI * 2); c.fill();
+          c.restore();
+        }
+        if (alive) requestAnimationFrame(frame); else c.clearRect(0, 0, W, H);
+      })();
+    }
+
+    /* ---------- Opening sequence ---------- */
+    // Seal "crack": two short filtered noise bursts, synthesised (no file needed)
+    function playSealCrack() {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ac = new AC();
+        const t = ac.currentTime;
+        [[0, 900, 0.6], [0.07, 1900, 0.35]].forEach(([delay, freq, vol]) => {
+          const len = 0.12;
+          const buf = ac.createBuffer(1, Math.floor(ac.sampleRate * len), ac.sampleRate);
+          const ch = buf.getChannelData(0);
+          for (let j = 0; j < ch.length; j++) ch[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / ch.length, 4);
+          const src = ac.createBufferSource();
+          src.buffer = buf;
+          const f = ac.createBiquadFilter();
+          f.type = 'bandpass'; f.frequency.value = freq; f.Q.value = 0.8;
+          const g = ac.createGain();
+          g.gain.value = vol;
+          src.connect(f); f.connect(g); g.connect(ac.destination);
+          src.start(t + delay);
+        });
+        setTimeout(() => ac.close(), 1000);
+      } catch (e) {}
+    }
+
+    /* ---------- Background music ---------- */
+    const bgm = $('bgm'), musicBtn = $('musicBtn');
+    let musicMuted = false, musicStarted = false;
+
+    function startMusic() {
+      bgm.volume = 0;
+      const pr = bgm.play();
+      if (!pr) return;
+      pr.then(() => {
+        musicStarted = true;
+        musicBtn.hidden = false;
+        let v = 0;
+        const fade = setInterval(() => {
+          v = Math.min(0.6, v + 0.03);
+          bgm.volume = v;
+          if (v >= 0.6) clearInterval(fade);
+        }, 100);
+      }).catch(() => { /* no music file yet, or blocked: keep button hidden */ });
+    }
+
+    musicBtn.addEventListener('click', () => {
+      musicMuted = !musicMuted;
+      if (musicMuted) bgm.pause(); else bgm.play().catch(() => {});
+      musicBtn.classList.toggle('muted', musicMuted);
+      musicBtn.setAttribute('aria-label', musicMuted ? 'Play music' : 'Mute music');
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!musicStarted || musicMuted) return;
+      if (document.hidden) bgm.pause(); else bgm.play().catch(() => {});
+    });
+
+    let opened = false;
+    function openInvite() {
+      if (opened) return;
+      opened = true;
+      playSealCrack();
+      if (navigator.vibrate) navigator.vibrate([15, 40, 25]);
+      startMusic();
+      intro.classList.add('open');
+      setTimeout(() => {
+        animateCurtains(reducedMotion ? 400 : 2800,
+          () => { hero.classList.add('show'); startPetals(); },
+          () => { scroller.classList.remove('locked'); });
+      }, reducedMotion ? 250 : 1300);
+      setTimeout(() => intro.classList.add('gone'), reducedMotion ? 450 : 1800);
+    }
+
+    intro.addEventListener('click', openInvite);
+    intro.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openInvite(); }
+    });
+    intro.focus({ preventScroll: true });
+
+    $('scrollHint').addEventListener('click', () => {
+      scroller.classList.remove('locked');
+      $('invite').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ---------- Scratch card ---------- */
+    const sc = $('scratchCanvas'), sctx = sc.getContext('2d');
+    let scratching = false, revealed = false, moves = 0, last = null, scW = 0, scH = 0;
+
+    async function initScratch(force) {
+      if (revealed) return;
+      try { await document.fonts.ready; } catch (e) {}
+      const w = sc.clientWidth, h = sc.clientHeight;
+      if (!w || (!force && w === scW && h === scH)) return;
+      scW = w; scH = h;
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      sc.width = w * dpr; sc.height = h * dpr;
+      sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      sctx.globalCompositeOperation = 'source-over';
+
+      const grad = sctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#D4AF37');
+      grad.addColorStop(0.5, '#FFF6BD');
+      grad.addColorStop(1, '#AA7C11');
+      sctx.fillStyle = grad;
+      sctx.fillRect(0, 0, w, h);
+
+      sctx.fillStyle = 'rgba(255,255,255,0.45)';
+      for (let i = 0; i < 70; i++) {
+        sctx.beginPath(); sctx.arc(Math.random() * w, Math.random() * h, Math.random() * 1.2 + 0.3, 0, Math.PI * 2); sctx.fill();
+      }
+
+      sctx.fillStyle = '#4A0A10';
+      sctx.textAlign = 'center';
+      sctx.textBaseline = 'middle';
+      if (lang === 'hi') {
+        sctx.font = '400 17px "Tiro Devanagari Sanskrit", serif';
+        sctx.fillText('✨ यहाँ खुरचें ✨', w / 2, h / 2);
+      } else {
+        sctx.font = '700 14px Cinzel, serif';
+        sctx.fillText('✨ SCRATCH HERE ✨', w / 2, h / 2);
+      }
+    }
+
+    function pos(e) {
+      const r = sc.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    function scratchLine(a, b) {
+      sctx.globalCompositeOperation = 'destination-out';
+      sctx.lineWidth = 38;
+      sctx.lineCap = 'round';
+      sctx.beginPath(); sctx.moveTo(a.x, a.y); sctx.lineTo(b.x + 0.01, b.y); sctx.stroke();
+    }
+
+    function checkReveal() {
+      if (revealed) return;
+      const d = sctx.getImageData(0, 0, sc.width, sc.height).data;
+      let clear = 0, total = 0;
+      for (let i = 3; i < d.length; i += 64) { total++; if (d[i] === 0) clear++; }
+      if (clear / total > 0.5) {
+        revealed = true;
+        sc.classList.add('done');
+        if (window.confetti) confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 }, colors: ['#C59B27', '#8E1F35', '#F3D9C8', '#D98C9A'] });
+      }
+    }
+
+    sc.addEventListener('pointerdown', (e) => {
+      if (revealed) return;
+      scratching = true;
+      sc.setPointerCapture(e.pointerId);
+      last = pos(e);
+      scratchLine(last, last);
+    });
+    sc.addEventListener('pointermove', (e) => {
+      if (!scratching) return;
+      const p = pos(e);
+      scratchLine(last, p);
+      last = p;
+      if (++moves % 8 === 0) checkReveal();
+    });
+    ['pointerup', 'pointercancel'].forEach((t) => sc.addEventListener(t, () => {
+      if (!scratching) return;
+      scratching = false;
+      checkReveal();
+    }));
+
+    window.addEventListener('resize', () => initScratch());
+
+    /* ---------- English / Hindi ---------- */
+    const i18nEls = Array.from(document.querySelectorAll('[data-hi]'));
+    i18nEls.forEach((el) => { el.dataset.en = el.innerHTML; });
+    const langBtn = $('langBtn');
+    let lang = 'en';
+
+    function setLang(l) {
+      lang = l;
+      document.documentElement.lang = l;
+      i18nEls.forEach((el) => { el.innerHTML = l === 'hi' ? el.dataset.hi : el.dataset.en; });
+      langBtn.textContent = l === 'hi' ? 'EN' : 'हिंदी';
+      langBtn.setAttribute('aria-label', l === 'hi' ? 'Switch to English' : 'हिंदी में देखें');
+      try { localStorage.setItem('invite-lang', l); } catch (e) {}
+      initScratch(true);
+    }
+
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setLang(lang === 'hi' ? 'en' : 'hi');
+    });
+
+    let savedLang = new URLSearchParams(location.search).get('lang');
+    if (!savedLang) { try { savedLang = localStorage.getItem('invite-lang'); } catch (e) {} }
+    setLang(savedLang === 'hi' ? 'hi' : 'en');
+
+    /* ---------- Scroll-in animations ---------- */
+    const rvEls = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window && !reducedMotion) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { root: scroller, threshold: 0.12 });
+      rvEls.forEach((el) => io.observe(el));
+    } else {
+      rvEls.forEach((el) => el.classList.add('in'));
+    }
+
+    /* ---------- Photos: hide frames whose image is missing ---------- */
+    (function setupPhotos() {
+      const section = $('photos');
+      const imgs = Array.from(section.querySelectorAll('img'));
+      let pending = imgs.length, ok = 0;
+      const done = (img, good) => {
+        if (good) ok++;
+        else {
+          const fig = img.closest('figure');
+          const row = fig.parentElement;
+          fig.remove();
+          if (row.classList.contains('row') && !row.children.length) row.remove();
+        }
+        if (--pending === 0 && ok === 0) section.hidden = true;
+      };
+      imgs.forEach((img) => {
+        img.loading = 'eager';
+        if (img.complete) done(img, img.naturalWidth > 0);
+        else {
+          img.addEventListener('load', () => done(img, true), { once: true });
+          img.addEventListener('error', () => done(img, false), { once: true });
+        }
+      });
+    })();
+
+    /* ---------- Footer: marigold & mango-leaf toran + diyas ---------- */
+    (function buildToran() {
+      const svg = $('toran');
+      let html = '<path d="M0 6 Q170 26 340 6" fill="none" stroke="#B5843F" stroke-width="1.6"/>';
+      const n = 19;
+      for (let i = 0; i <= n; i++) {
+        const t = i / n, x = 340 * t;
+        const y = (1 - t) * (1 - t) * 6 + 2 * (1 - t) * t * 26 + t * t * 6;
+        const delay = (-(i % 5) * 0.6).toFixed(1);
+        if (i % 2 === 0) {
+          // marigold string: three flowers
+          html += `<g class="hang" style="animation-delay:${delay}s">
+            <line x1="${x}" y1="${y}" x2="${x}" y2="${y + 26}" stroke="#B5843F" stroke-width=".8"/>
+            <circle cx="${x}" cy="${y + 7}" r="4.6" fill="#F39C12" stroke="#D9730D" stroke-width=".6"/>
+            <circle cx="${x}" cy="${y + 16}" r="4.6" fill="#F7C531" stroke="#D99A0D" stroke-width=".6"/>
+            <circle cx="${x}" cy="${y + 25}" r="4.6" fill="#F39C12" stroke="#D9730D" stroke-width=".6"/>
+          </g>`;
+        } else {
+          // mango leaf
+          html += `<g class="hang" style="animation-delay:${delay}s">
+            <path d="M${x} ${y} C${x + 7} ${y + 8} ${x + 5} ${y + 18} ${x} ${y + 24} C${x - 5} ${y + 18} ${x - 7} ${y + 8} ${x} ${y} Z" fill="#5E7F3E" stroke="#3F5A28" stroke-width=".6"/>
+            <path d="M${x} ${y + 2} V${y + 22}" stroke="#8DAA5C" stroke-width=".6"/>
+          </g>`;
+        }
+      }
+      svg.innerHTML = html;
+    })();
+
+    document.querySelectorAll('.diya-slot').forEach((slot, i) => {
+      slot.outerHTML = `<svg class="diya" viewBox="0 0 44 44" aria-hidden="true">
+        <defs><radialGradient id="diyaGlow${i}"><stop offset="0" stop-color="#FFD36B" stop-opacity=".75"/><stop offset="1" stop-color="#FFD36B" stop-opacity="0"/></radialGradient></defs>
+        <circle class="glow" cx="22" cy="16" r="15" fill="url(#diyaGlow${i})"/>
+        <path class="flame" d="M22 4 C27.5 11 26.5 18 22 21.5 C17.5 18 16.5 11 22 4 Z" fill="#F7A21B"/>
+        <path class="flame inner" d="M22 10 C24.5 14 24 18 22 20 C20 18 19.5 14 22 10 Z" fill="#FFE27A"/>
+        <path d="M5 23 Q22 21 39 23 Q37 36 22 37 Q7 36 5 23 Z" fill="#B5582E" stroke="#7A3518"/>
+        <path d="M8 25 Q22 28.5 36 25" stroke="#E7A04A" fill="none"/>
+        <g fill="#F2C14E"><circle cx="14" cy="31" r="1.3"/><circle cx="22" cy="32.5" r="1.3"/><circle cx="30" cy="31" r="1.3"/></g>
+      </svg>`;
+    });
+
+    /* ---------- Countdown (fixed to India time) ---------- */
+    const weddingDate = new Date('2027-01-25T10:00:00+05:30').getTime();
+    const pad = (n) => String(n).padStart(2, '0');
+    let countdownTimer;
+
+    function updateCountdown() {
+      const diff = weddingDate - Date.now();
+      if (diff <= 0) {
+        ['days', 'hours', 'mins', 'secs'].forEach((id) => $(id).textContent = '00');
+        $('countdown').hidden = true;
+        $('countdownDone').hidden = false;
+        clearInterval(countdownTimer);
+        return;
+      }
+      $('days').textContent = pad(Math.floor(diff / 86400000));
+      $('hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      $('mins').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      $('secs').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    countdownTimer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
