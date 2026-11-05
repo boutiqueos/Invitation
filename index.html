@@ -212,7 +212,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 74px 40px 70px;
+      padding: 74px 40px 40px;
       overflow-y: auto;
       scrollbar-width: none;
       background:
@@ -272,43 +272,29 @@
     .strand.r { right: 18px; animation-delay: -1.8s; }
     @keyframes strandSway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
 
-    /* page navigation */
-    .book-nav {
+    /* page navigation: arrows on the left & right edges */
+    .pg-arrow {
       position: absolute;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
+      top: 50%;
       z-index: 40;
+      width: 32px;
+      height: 32px;
+      margin-top: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 193, 78, 0.9);
+      background: rgba(74, 10, 16, 0.82);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px;
-      border-radius: 22px;
-      background: rgba(255, 251, 243, 0.94);
-      border: 1px solid rgba(197, 155, 39, 0.6);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-    }
-    .book-nav button {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      background: var(--maroon-deep);
-      color: #FFF;
-      font-size: 20px;
-      line-height: 1;
+      justify-content: center;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .book-nav button:disabled { opacity: 0.3; cursor: default; }
-    .pg-num {
-      min-width: 48px;
-      text-align: center;
-      font-family: 'Cinzel', serif;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: var(--maroon);
-    }
+    .pg-arrow svg { width: 10px; height: 16px; }
+    .pg-arrow.prev { left: 6px; }
+    .pg-arrow.next { right: 6px; animation: nudge 1.6s ease-in-out infinite; }
+    .pg-arrow.off { opacity: 0; visibility: hidden; pointer-events: none; }
 
     /* ============ STEP 2: CURTAIN STAGE ============ */
     .stage {
@@ -1317,11 +1303,8 @@
       </div><div class="face back"></div></div>
     </main>
 
-    <nav class="book-nav" id="bookNav" hidden aria-label="Pages">
-      <button id="pgPrev" aria-label="Previous page">‹</button>
-      <span class="pg-num" id="pgNum">1 / 1</span>
-      <button id="pgNext" aria-label="Next page">›</button>
-    </nav>
+    <button class="pg-arrow prev off" id="pgPrev" aria-label="Previous page"><svg viewBox="0 0 10 16"><path d="M8 1 L2 8 L8 15" fill="none" stroke="#F2C14E" stroke-width="2"/></svg></button>
+    <button class="pg-arrow next off" id="pgNext" aria-label="Next page"><svg viewBox="0 0 10 16"><path d="M2 1 L8 8 L2 15" fill="none" stroke="#F2C14E" stroke-width="2"/></svg></button>
 
     <canvas id="petals"></canvas>
 
@@ -1358,8 +1341,8 @@
       <button class="ctrl" id="langBtn" aria-label="Switch language">हिंदी</button>
     </div>
 
-    <!-- Background music: place the file at assets/music.mp3 (button stays hidden if missing) -->
-    <audio id="bgm" src="assets/music.mp3" loop preload="auto"></audio>
+    <!-- Background music (59 s AAC clip, loops) -->
+    <audio id="bgm" src="assets/music.m4a" loop preload="auto"></audio>
   </div>
 
   <script>
@@ -1793,7 +1776,7 @@
     setLang(savedLang === 'hi' ? 'hi' : 'en');
 
     /* ---------- Notebook: 3D page turns ---------- */
-    const book = $('book'), bookNav = $('bookNav'), pgPrev = $('pgPrev'), pgNext = $('pgNext'), pgNum = $('pgNum');
+    const book = $('book'), pgPrev = $('pgPrev'), pgNext = $('pgNext');
     const TURN_MS = reducedMotion ? 250 : 1100;
     let pages = [], cur = 0, bookReady = false, turning = false;
 
@@ -1809,10 +1792,9 @@
     }
 
     function updateNav() {
-      pgNum.textContent = `${cur + 1} / ${pages.length}`;
-      pgPrev.disabled = cur === 0;
-      pgNext.disabled = cur === pages.length - 1;
-      bookNav.hidden = !bookReady || cur === 0;
+      // arrows appear once the cover is turned; no "back" on the cover, no "next" on the last page
+      pgPrev.classList.toggle('off', !bookReady || cur === 0);
+      pgNext.classList.toggle('off', !bookReady || cur === 0 || cur === pages.length - 1);
     }
 
     // Soft paper "swish", synthesised
