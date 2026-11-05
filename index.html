@@ -194,6 +194,7 @@
     }
 
     .page.turned { transform: rotateY(-180deg); }
+    .page.cover { cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .page:not(.current) { pointer-events: none; }
 
     .face {
@@ -1718,7 +1719,12 @@
     });
     intro.focus({ preventScroll: true });
 
-    $('nextPageBtn').addEventListener('click', () => { bookReady = true; goTo(1); });
+    // Once the doors are open, a tap anywhere on the cover opens the card
+    document.querySelector('.page.cover').addEventListener('click', () => {
+      if (!opened) return;
+      bookReady = true;
+      goTo(1);
+    });
 
     /* ---------- Heart scratch card ---------- */
     const sc = $('scratchCanvas'), sctx = sc.getContext('2d');
